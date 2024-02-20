@@ -24,8 +24,9 @@ public class KeycloakDevPlugin implements Plugin<Project> {
                     configuration.setDescription("Development Keycloak");
                     configuration.defaultDependencies(d -> {
                         //d.add(target.getDependencies().create("org.keycloak:keycloak-quarkus-server:"+keycloakExt.getKeycloakVersion().get()));
-                        d.add(target.getDependencies().create("org.keycloak:keycloak-quarkus-server-app:"+keycloakExt.getKeycloakVersion().get()));
-                        d.add(target.getDependencies().create("org.keycloak:keycloak-quarkus-server-deployment:"+keycloakExt.getKeycloakVersion().get()));
+                        //d.add(target.getDependencies().create("org.keycloak:keycloak-quarkus-server-app:"+keycloakExt.getKeycloakVersion().get()));
+                        //d.add(target.getDependencies().create("org.keycloak:keycloak-quarkus-server-deployment:"+keycloakExt.getKeycloakVersion().get()));
+                        d.add(target.getDependencies().create("org.keycloak:keycloak-junit5:"+keycloakExt.getKeycloakVersion().get()));
                         //d.add(target.getDependencies().create("org.keycloak:keycloak-quarkus-server:"+keycloakExt.getKeycloakVersion().get()))
                     });
                 });
@@ -78,9 +79,10 @@ public class KeycloakDevPlugin implements Plugin<Project> {
             run.setMinHeapSize("64m");
             run.setClasspath(files);
             //run.getMainClass().set("org.keycloak.quarkus.runtime.KeycloakMain");
-            run.getMainClass().set("org.keycloak.quarkus._private.IDELauncher");
+            //run.getMainClass().set("org.keycloak.quarkus._private.IDELauncher");
             //run.getMainClass().set("io.quarkus.bootstrap.runner.QuarkusEntryPoint");
-            run.setArgs(List.of("start-dev"));
+            run.getMainClass().set("org.keycloak.Keycloak");
+            run.setArgs(List.of("--verbose", "start-dev"));
         });
     }
 }
